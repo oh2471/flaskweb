@@ -188,13 +188,36 @@ def edit_article(id):
     form.title.data = article['body']
 
     if request.method == 'POST' and form.validate():
-        title = form.title.data 
-        body = form.body.data
+        title = request.form['title']
+        body = request.form['body']
 
         cur = mysql.connection.cursor()
 
-        cur.execute("UPDATE articles SET name=%s, body=%s WHERE id=%s",(title,body))
+        cur.execute("UPDATE articles SET title=%s, body=%s WHERE id=%s",(title,body,id))
 
+        mysql.connection.commit()
+    
+        cur.close()
+        
+        flash('Article Update','success')
+
+        return redirect(url_for('dashboard'))
+    
+    return render_template('edit_article.html',form=form)
+      
+@app.route('/delete_article/<string:id>',methods=['POST'])
+@is_logged_in
+def delete_article(id):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM articles WHERE id = %s",[id])
+
+    mysql.connection.commit()
+
+    cur.close()
+
+    flash('Article Deleted ' ,'success')
+
+    return redirect(url_for('dashboard'))
 
 
 
