@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<h1>Daily BTC Chart</h1>
+<hr>
+<table class="table table-striped">
+    <tr>
+        <th>ID</th>
+        <th>High</th>
+        <th>Low</th>
+        <th>Open</th>
+        <th>Close</th>
+        <th>Volume</th>
+        <th>Adj Close</th>
+        <th>Date</th>
+    </tr>
+    {% for d in data %}
+    <tr>
+        <td>{{d.id}}</td>
+        <td>{{d.High}}</td>
+        <td>{{d.Low}}</td>
+        <td>{{d.Open}}</td>
+        <td>{{d.Close}}</td>
+        <td>{{d.Volume}}</td>
+        <td>{{d.AdjClose}}</td>
+        <td>{{d.date}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
